@@ -16,8 +16,6 @@ class Solution(object):
         :type M: List[List[int]]
         :rtype: int
         """
-
-
         parent = [-1 for _ in range(len(M))]
 
         for row in range(len(M)):
