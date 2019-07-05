@@ -20,3 +20,27 @@ class Solution(object):
                         cols[col].add(val)
                         boxes[row//3][col//3].add(val)        
         return True    
+
+"""
+
+Faster solution with one set:
+
+class Solution(object):
+    def isValidSudoku(self, board):
+
+        width = len(board)
+        seen = set()
+        # check 
+        for row in range(width):
+            for col in range(width):
+                val = board[row][col]
+                if val != '.':
+                    if (row,val) in seen or (val,col) in seen or (row//3,col//3,val) in seen:
+                        return False
+                    else:
+                        seen.add((row,val))
+                        seen.add((val,col))
+                        seen.add((row//3,col//3,val))        
+        return True    
+
+"""
