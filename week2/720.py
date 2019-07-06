@@ -22,38 +22,6 @@ class Trie(object):
             curr = curr.children[char]
         curr.val = word
 
-    def search(self, word):
-        """
-        Returns if the word is in the trie.
-        :type word: str
-        :rtype: bool
-        """
-        
-        curr = self
-        for char in word:
-            if char not in curr.children:
-                return False
-    
-            curr = curr.children[char]
-        
-        if curr.val == word:
-            return True
-        return False
-                  
-
-    def startsWith(self, prefix):
-        """
-        Returns if there is any word in the trie that starts with the given prefix.
-        :type prefix: str
-        :rtype: bool
-        """
-        curr = self        
-        for char in prefix:
-            if char not in curr.children:
-                return False
-            curr = curr.children[char]
-        return True
-
 class Solution(object):
     def longestWord(self, words):
         """
@@ -64,8 +32,7 @@ class Solution(object):
         for word in words:
             trie.insert(word)
         
-        # pre-order traversal
-      
+        # dfs using a stack. Store (trieNode,level) in stack.
         stack = [(trie,0)]
         longest = []    
         maxHeight = 0
@@ -75,16 +42,21 @@ class Solution(object):
             
             node, height= curr[0], curr[1]
             
+            # push the node's children onto the stack whose values != None
+            # because we want to find the longest word that can be built 
+            # one character at a time by other words in words.
+            # In a trie, these words form continuous branches where no node has value None.
             if node.children:
                 for child in node.children:
                     if node.children[child].val != None:
                         stack.append((node.children[child],height+1))
            
-
+            # keep a list of the longest words 
             if height >= maxHeight:
                 if height > maxHeight:
                     longest = []
                     maxHeight = height
                 longest.append(node.val)
         
+        # return the longest word with the smallest lexicographical order
         return min(longest)
