@@ -9,12 +9,13 @@ class Solution(object):
         
         while begin <= end:
             mid = (begin + end) // 2
-            
+            # return target if equal to middle number
             if nums[mid] == target:
                 return mid
+            # if target < middle number, then search in left haft of list
             elif target < nums[mid]:
                 end = mid - 1
+            # else search in right half
             else:
-                begin = mid + 1
-        
+                begin = mid + 1       
         return -1
