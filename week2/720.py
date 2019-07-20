@@ -60,3 +60,4 @@ class Solution(object):
         
         # return the longest word with the smallest lexicographical order
         return min(longest)
+        
