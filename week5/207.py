@@ -1,15 +1,15 @@
 from collections import deque, defaultdict
 
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:       
+    def canFinish(self, numCourses, prerequisites):
         
         """ Using Kahn's Topological Sorting algorithm"""
         neighbors = defaultdict(list)
         # calculate in-degree
         inDegree = [0 for _ in range(numCourses)]
         for edge in prerequisites:
-            inDegree[edge[1]] += 1
-            neighbors[edge[0]].append(edge[1])
+            inDegree[edge[0]] += 1
+            neighbors[edge[1]].append(edge[0])
         
         # queue
         queue = deque()
@@ -17,17 +17,22 @@ class Solution:
             if deg == 0:
                 queue.append(node)
         
-        # count of visited nodes
         visited = 0
         while queue:
             node = queue.popleft()
             visited += 1
 
-            # loop through all neighbors of a node and reduce their 
-            # in-degrees, if reduced to 0 then add node to queue
             for neighbor in neighbors[node]:
                 inDegree[neighbor] -= 1
                 if inDegree[neighbor] == 0:
                     queue.append(neighbor)
         
         return visited == numCourses
+
+if __name__ == "__main__":
+    sol = Solution()
+    print(sol.canFinish(3, [[1,0],[1,2]]))
+
+
+
+
