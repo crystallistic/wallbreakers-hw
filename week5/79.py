@@ -4,6 +4,7 @@ class Solution:
         path = ''
         ans = False
 
+        # using dfs and backtracking
         def dfs(board,row,col,path,word):
             if len(word) == len(path):
                 return word == path
